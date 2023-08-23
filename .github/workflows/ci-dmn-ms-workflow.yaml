@@ -4,15 +4,15 @@ jobs:
   check-dmn-microservice:
     runs-on: ubuntu-latest                          
     steps:             
-      - run: ls                             
       - uses: actions/checkout@v3                   
       - uses: actions/setup-go@v4
         with:                                       
           go-version: 1.15
           cache-dependency-path: dmn-microservice/go.sum
+      - run: ls                             
       - name: Run file
         working-directory: ./dmn-microservice
-        run: go run dmn-microservice/dmn-microservice.go
+        run: go run ./dmn-microservice/dmn-microservice.go
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
