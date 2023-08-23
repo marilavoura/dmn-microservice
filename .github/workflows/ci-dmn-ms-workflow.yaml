@@ -1,0 +1,39 @@
+name: ci-dmn-ms-workflow
+on: push
+jobs:
+  check-application:
+    runs-on: ubuntu-latest                          
+    steps:                                          
+      - uses: actions/checkout@v2                   
+      - uses: actions/setup-go@v2
+        with:                                       
+          go-version: 1.15
+      - run: go test                                
+      - run: go run dmn-microservice/dmn-microservice
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        id: docker_build_dmn
+        uses: docker/build-push-action@v2
+        with:
+          context: "{{defaultContext}}:dmn-microservice"
+          push: true
+          tags: marianalavoura/dmn-microservice:latest
+      
+      - name: Build and push
+        id: docker_build_test
+        uses: docker/build-push-action@v2
+        with:
+          context: "{{defaultContext}}:tests-producer"
+          push: true
+          tags: marianalavoura/tests-producer:latest
