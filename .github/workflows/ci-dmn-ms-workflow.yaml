@@ -1,13 +1,14 @@
 name: ci-dmn-ms-workflow
 on: push
 jobs:
-  check-application:
+  check-dmn-microservice:
     runs-on: ubuntu-latest                          
     steps:                                          
       - uses: actions/checkout@v3                   
       - uses: actions/setup-go@v4
         with:                                       
           go-version: 1.15
+          cache-dependency-path: dmn-microservice/go.sum
       - run: go run dmn-microservice/dmn-microservice.go
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -28,9 +29,30 @@ jobs:
           context: "{{defaultContext}}:dmn-microservice"
           push: true
           tags: marianalavoura/dmn-microservice:latest
-      
+
+  check-tests-producer:
+    runs-on: ubuntu-latest                          
+    steps:                                          
+      - uses: actions/checkout@v3                   
+      - uses: actions/setup-go@v4
+        with:                                       
+          go-version: 1.15
+          cache-dependency-path: tests-producer/go.sum
+      - run: go run tests-producer/producer.go
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Build and push
-        id: docker_build_test
+        id: docker_build_dmn
         uses: docker/build-push-action@v4
         with:
           context: "{{defaultContext}}:tests-producer"
