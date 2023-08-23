@@ -9,7 +9,7 @@ jobs:
         with:                                       
           go-version: 1.15
           cache-dependency-path: dmn-microservice/go.sum
-      - run: go run dmn-microservice/dmn-microservice.go
+      - run: go run dmn-microservice.go
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
@@ -38,7 +38,7 @@ jobs:
         with:                                       
           go-version: 1.15
           cache-dependency-path: tests-producer/go.sum
-      - run: go run tests-producer/producer.go
+      - run: go run producer.go
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
