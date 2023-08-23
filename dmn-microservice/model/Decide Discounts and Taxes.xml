@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_0vvu789" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.7.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.1.0" camunda:diagramRelationId="443261ee-c66f-444f-b851-4df8a50fdc46">
+  <decision id="Decision_0mq46dp" name="Decide discounts and taxes">
+    <decisionTable id="DecisionTable_0d9lvr7" hitPolicy="FIRST" biodi:annotationsWidth="400">
+      <input id="Input_1" label="Supplier" biodi:width="192">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+        <inputValues id="UnaryTests_0fagg42">
+          <text>"Almir","Betina","Cecília"</text>
+        </inputValues>
+      </input>
+      <input id="InputClause_0j5e6p0" label="Price" biodi:width="206">
+        <inputExpression id="LiteralExpression_1o49him" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1jz1kwl" label="Type">
+        <inputExpression id="LiteralExpression_0ziw9dx" typeRef="string">
+          <text></text>
+        </inputExpression>
+        <inputValues id="UnaryTests_1vjhcdo">
+          <text>"Nacional","Internacional"</text>
+        </inputValues>
+      </input>
+      <output id="Output_1" label="Taxes" typeRef="number" />
+      <output id="OutputClause_1ifmfg7" label="Discounts" typeRef="number" />
+      <rule id="DecisionRule_05gxpw6">
+        <inputEntry id="UnaryTests_0fbqnfg">
+          <text>"Betina"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_025zlcx">
+          <text>&lt; 1000.00</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1f3dvac">
+          <text>"Internacional"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_10afi11">
+          <text>15.00</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0a2m3hk">
+          <text>5.00</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_111l2ju">
+        <inputEntry id="UnaryTests_078z7po">
+          <text>"Betina"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0dwob4f">
+          <text>[1000.00..5000.00]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hjnhyk">
+          <text>"Nacional", "Internacional"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_13e4l0s">
+          <text>10.00</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1yfnq26">
+          <text>4.00</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_079mq84">
+        <inputEntry id="UnaryTests_0jvp8ev">
+          <text>"Betina"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1238y4c">
+          <text>&gt;= 5000.00</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1m1p17h">
+          <text>"Nacional", "Internacional"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ocrj8v">
+          <text>40.00</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_07wr5e0">
+          <text>20.00</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_03oruug">
+        <inputEntry id="UnaryTests_1mifa8n">
+          <text>"Cecília", "Almir"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_161yeyw">
+          <text>&lt; 14000.00</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0r8rmz1">
+          <text>"Internacional"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1kbrqiv">
+          <text>30.00</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1bmh2ac">
+          <text>14.00</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_04lsxrm">
+        <inputEntry id="UnaryTests_1nghj8a">
+          <text>"Cecília", "Almir"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_13dxgvz">
+          <text>[14000.00..20000.00]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_19u80zn">
+          <text>"Nacional", "Internacional"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_06oob55">
+          <text>50.00</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1a1iq2r">
+          <text>20.00</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1dege1k">
+        <inputEntry id="UnaryTests_1do1rvj">
+          <text>"Almir"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1gobqaj">
+          <text>&gt; 20000.00</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0a8ply1">
+          <text>"Internacional"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_01ty905">
+          <text>50.00</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_05ueha1">
+          <text>24.00</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1afpo8q">
+        <inputEntry id="UnaryTests_0bvhrqj">
+          <text>"Cecília"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hqblq3">
+          <text>&gt; 20000.00</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1s22kac">
+          <text>"Internacional"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1rcgwvy">
+          <text>35.00</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0piwuxv">
+          <text>30.50</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_09plnai">
+        <inputEntry id="UnaryTests_0ncsj86">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1gomarm">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0fsojrw">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_01v1qja">
+          <text>15.00</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_02g8uv6">
+          <text>0</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_0mq46dp">
+        <dc:Bounds height="80" width="180" x="870" y="260" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
+

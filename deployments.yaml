@@ -1,0 +1,137 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: zookeeper
+spec:
+  serviceName: "zookeeper"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zookeeper
+  template:
+    metadata:
+      labels:
+        app: zookeeper
+    spec:
+      containers:
+      - image: zookeeper:3.8.1
+        name: zookeeper
+        ports:
+        - containerPort: 2181
+        resources: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: zookeeper
+spec:
+  selector:
+    app: zookeeper
+  ports:
+  - port: 2181
+    targetPort: 2181
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kafka
+spec:
+  serviceName: "kafka"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+      - image: bitnami/kafka:3.4.0
+        name: kafka
+        ports:
+        - containerPort: 9092
+        resources: {}
+        env:
+          - name: ALLOW_PLAINTEXT_LISTENER
+            value: "yes"
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka
+  labels:
+    app: kafka
+spec:
+  ports:
+  - port: 9092
+    name: kafka
+    targetPort: 9092
+  selector:
+    app: kafka
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: dmn-microservice
+  name: dmn-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: dmn-microservice
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        run: dmn-microservice
+    spec:
+      containers:
+      - image: docker.io/marianalavoura/dmn-microservice:0.1
+        name: dmn-microservice
+        ports:
+        - containerPort: 5000
+        resources: {}
+status: {}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: tests-producer
+  name: tests-producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: tests-producer
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        run: tests-producer
+    spec:
+      containers:
+      - image: docker.io/marianalavoura/tests-producer:1.6
+        name: tests-producer
+        ports:
+        - containerPort: 5001
+        resources: {}
+        livenessProbe:
+          exec:
+            command:
+            - cat
+            - /tmp/healthy
+          initialDelaySeconds: 10
+          periodSeconds: 10
+status: {}
