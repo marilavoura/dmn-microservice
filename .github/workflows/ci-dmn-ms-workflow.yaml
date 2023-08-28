@@ -10,9 +10,12 @@ jobs:
           go-version: 1.15
           cache-dependency-path: dmn-microservice/go.sum
       - run: ls                             
+      - name: Build file
+        working-directory: ./dmn-microservice
+        run: go build .
       - name: Run file
         working-directory: ./dmn-microservice
-        run: go run ./dmn-microservice/dmn-microservice.go
+        run: ./dmn-microservice
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
