@@ -15,7 +15,7 @@
           <text></text>
         </inputExpression>
       </input>
-      <input id="InputClause_1jz1kwl" label="Type">
+      <input id="InputClause_1jz1kwl" label="Nationality">
         <inputExpression id="LiteralExpression_0ziw9dx" typeRef="string">
           <text></text>
         </inputExpression>
